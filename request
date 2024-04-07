@@ -80,4 +80,4 @@ async def on_message(message):
         else:
             print(bmode[mode](text))
 
-bot.run(open('token','r').read())
+bot.run(open(__file__.replace(__file__.split('\\')[-1],'token'),'r').read())
