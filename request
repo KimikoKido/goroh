@@ -4,9 +4,10 @@ file_name = __file__.split('\\')[-1]
 file_path = __file__.replace(file_name,'')
 file_log = file_path+'log'
 file_config = file_path+'config'
-exec(open(file_config).read())
+def initial_config():
+    exec(open(file_config).read())
 debug = True
-print('██╗░░██╗██╗███╗░░░███╗██╗██╗░░██╗░█████╗░  ██╗░░██╗██╗██████╗░░█████╗░\n██║░██╔╝██║████╗░████║██║██║░██╔╝██╔══██╗  ██║░██╔╝██║██╔══██╗██╔══██╗\n█████═╝░██║██╔████╔██║██║█████═╝░██║░░██║  █████═╝░██║██║░░██║██║░░██║\n██╔═██╗░██║██║╚██╔╝██║██║██╔═██╗░██║░░██║  ██╔═██╗░██║██║░░██║██║░░██║\n██║░╚██╗██║██║░╚═╝░██║██║██║░╚██╗╚█████╔╝  ██║░╚██╗██║██████╔╝╚█████╔╝\n╚═╝░░╚═╝╚═╝╚═╝░░░░░╚═╝╚═╝╚═╝░░╚═╝░╚════╝░  ╚═╝░░╚═╝╚═╝╚═════╝░░╚════╝░\n')
+initial_config()
 def debugger(value):
     if debug:
         with open(file_log,'a') as f:
