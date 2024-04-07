@@ -64,8 +64,8 @@ def vavada(pr):
             for i in browsers:
                 browser(i).find_element(By.XPATH,'//input[@value="Apply"]'.format(k)).click()
             break
-         except Exception as ex:
-            print(ex)
+         except Exception as e:
+            print(e)
     return f'Успешное выполнение VAVADA с промокодом "{pr}"'
 
 bmode['vavada'] = vavada
