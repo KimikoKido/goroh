@@ -5,14 +5,13 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 import discord
 import requests
-from goroh import gthread
 from discord.ext import commands
 
 opened = True
 uadr = "127.0.0.1"
 uport = '25325'
 
-uresponse = requests.get(f'http://{uadr}:{uport}/list').json()['data'] # Отправляем запрос к локальному API для получения списка профилей
+uresponse = requests.get(f'http://{uadr}:{uport}/list').json()['data']
 profile_id = ''
 keys = {}
 for key, value, in uresponse.items():
