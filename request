@@ -1,14 +1,84 @@
-from datetime import datetime
-import pytz
-file_name = __file__.split('\\')[-1]
-file_path = __file__.replace(file_name,'')
-file_log = file_path+'log'
-file_config = file_path+'config'
-def initial_config():
-    exec(open(file_config).read())
-debug = True
-initial_config()
-def debugger(value):
-    if debug:
-        with open(file_log,'a') as f:
-            f.write('['+str(datetime.now(pytz.timezone('Europe/Moscow'))).split('.')[0]+'] ['+file_name+'] - '+str(value) + '\n')
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+import discord
+import requests
+from goroh import gthread
+from discord.ext import commands
+
+opened = True
+uadr = "127.0.0.1"
+uport = '25325'
+
+uresponse = requests.get(f'http://{uadr}:{uport}/list').json()['data'] # Отправляем запрос к локальному API для получения списка профилей
+profile_id = ''
+keys = {}
+for key, value, in uresponse.items():
+    r = requests.get(f'http://{uadr}:{uport}/profile/start/{key}').json()['data']
+    keys[r['name']] = r['debug_port']
+    
+browsers = {}
+
+def browser_debugger(port):
+    opt=Options()
+    opt.debugger_address = uadr+":"+keys[str(port)]
+    ser = Service("chromedriver.exe")
+    driver = webdriver.Chrome(service=ser, options=opt)
+    browsers[port] = driver
+
+def browser(port):
+    try:
+        return browsers[str(port)]
+    except:
+        pass
+
+for i in keys:
+    browser_debugger(i)
+
+
+def ex(text):
+    try:
+        exec(text)
+    except Exception as e:
+        print(e)
+
+gthread(lambda: ex(input()),0,True)
+
+bot = commands.Bot(command_prefix='/', intents = discord.Intents.all())
+
+mode = 'vavada'
+bmode = {}
+
+def null_mode(*a):
+    return 'Не выбран режим'
+bmode[None] = null_mode
+
+def vavada(pr):
+    # напомните мне кто-нибудь добавить сюда режим вкладок когда будет больше чем одинн режим вавады
+    for i in browsers:
+        browser(i).find_element(By.ID,'promo_code_token').send_keys(pr)   
+    time.sleep(0.1)
+    for i in browsers:
+        browser(i).find_element(By.XPATH,'//input[@value="Применить"]').click()
+    return f'Успешное выполнение VAVADA с промокодом "{pr}"'
+
+bmode['vavada'] = vavada
+
+
+def dragon(pr):
+    return f'Успешное выполнение DRAGON с промокодом "{pr}"'
+bmode['dragon'] = dragon
+
+@bot.event
+async def on_message(message):
+    global mode, bmode
+    if message.channel.id == 871551569441726515:
+        text = message.content
+        if text[0] == '/':
+            mode = text.lower()[1:]
+        else:
+            print(bmode[mode](text))
+
+bot.run(open('token','r').read())
