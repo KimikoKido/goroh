@@ -59,9 +59,9 @@ def vavada(pr):
     for k in range(1,4):
         for i in browsers:
             browser(i).find_element(By.ID,'promo_code_token'.format(k)).send_keys(pr)   
-        time.sleep(0.3)
+        time.sleep(0.15)
         for i in browsers:
-            browser(i).find_element(By.XPATH,'//input[@value="Применить"]'.format(k)).click()
+            browser(i).find_element(By.XPATH,'//input[@value="Apply"]'.format(k)).click()
     return f'Успешное выполнение VAVADA с промокодом "{pr}"'
 
 bmode['vavada'] = vavada
