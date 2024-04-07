@@ -23,7 +23,7 @@ browsers = {}
 def browser_debugger(port):
     opt=Options()
     opt.debugger_address = uadr+":"+keys[str(port)]
-    ser = Service("chromedriver.exe")
+    ser = Service(__file__.replace(__file__.split('\\')[-1],"chromedriver.exe"))
     driver = webdriver.Chrome(service=ser, options=opt)
     browsers[port] = driver
 
