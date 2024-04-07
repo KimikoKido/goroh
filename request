@@ -1,0 +1,13 @@
+from datetime import datetime
+import pytz
+file_name = __file__.split('\\')[-1]
+file_path = __file__.replace(file_name,'')
+file_log = file_path+'log'
+file_config = file_path+'config'
+exec(open(file_config).read())
+debug = True
+print('██╗░░██╗██╗███╗░░░███╗██╗██╗░░██╗░█████╗░  ██╗░░██╗██╗██████╗░░█████╗░\n██║░██╔╝██║████╗░████║██║██║░██╔╝██╔══██╗  ██║░██╔╝██║██╔══██╗██╔══██╗\n█████═╝░██║██╔████╔██║██║█████═╝░██║░░██║  █████═╝░██║██║░░██║██║░░██║\n██╔═██╗░██║██║╚██╔╝██║██║██╔═██╗░██║░░██║  ██╔═██╗░██║██║░░██║██║░░██║\n██║░╚██╗██║██║░╚═╝░██║██║██║░╚██╗╚█████╔╝  ██║░╚██╗██║██████╔╝╚█████╔╝\n╚═╝░░╚═╝╚═╝╚═╝░░░░░╚═╝╚═╝╚═╝░░╚═╝░╚════╝░  ╚═╝░░╚═╝╚═╝╚═════╝░░╚════╝░\n')
+def debugger(value):
+    if debug:
+        with open(file_log,'a') as f:
+            f.write('['+str(datetime.now(pytz.timezone('Europe/Moscow'))).split('.')[0]+'] ['+file_name+'] - '+str(value) + '\n')
