@@ -56,12 +56,13 @@ bmode[None] = null_mode
 
 def vavada(pr):
     # напомните мне кто-нибудь добавить сюда режим вкладок когда будет больше чем одинн режим вавады
-    for k in range(1,4):
+    for k in range(3):
         for i in browsers:
-            browser(i).find_element(By.ID,'promo_code_token'.format(k)).send_keys(pr)   
-        time.sleep(0.15)
-        for i in browsers:
-            browser(i).find_element(By.XPATH,'//input[@value="Apply"]'.format(k)).click()
+            browser(i).switch_to.window(browser(i).window_handles[-1])
+            browser(i).find_element(By.ID,'promo_code_token').send_keys(pr)           
+            time.sleep(0.15)
+            browser(i).find_element(By.XPATH,'//input[@value="Apply"]').click()
+        time.sleep(2.5)
     return f'Успешное выполнение VAVADA с промокодом "{pr}"'
 
 bmode['vavada'] = vavada
