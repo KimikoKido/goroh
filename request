@@ -55,7 +55,7 @@ def null_mode(*a):
 bmode[None] = null_mode
 
 def pr1(l,pr):
-    with open(__file__.replace(__file__.split('\\')[-1],'temp'),'r') as g:
+    with open(__file__.replace(__file__.split('\\')[-1],'k'),'r') as g:
         k = g.read()
         browser(l).switch_to.window(browser(l).window_handles[-1])
         browser(l).find_element(By.ID,'promo_code_token'.format(k)).send_keys(pr)
