@@ -54,15 +54,15 @@ def null_mode(*a):
     return 'Не выбран режим'
 bmode[None] = null_mode
 
+def pr1(l,k,pr):
+    browser(l).switch_to.window(browser(l).window_handles[-1])
+    browser(l).find_element(By.ID,'promo_code_token'.format(k)).send_keys(pr)
+    browser(l).find_element(By.XPATH,'//input[@value="Apply"]'.format(k)).click()
+
 def vavada(pr):
-    # напомните мне кто-нибудь добавить сюда режим вкладок когда будет больше чем одинн режим вавады
-    for k in range(3):
+    for k in range(4):
         for i in browsers:
-            browser(i).switch_to.window(browser(i).window_handles[-1])
-            browser(i).find_element(By.ID,'promo_code_token').send_keys(pr)           
-            time.sleep(0.15)
-            browser(i).find_element(By.XPATH,'//input[@value="Apply"]').click()
-        time.sleep(2.5)
+            gthread(lambda: pr1(i,k,pr))
     return f'Успешное выполнение VAVADA с промокодом "{pr}"'
 
 bmode['vavada'] = vavada
